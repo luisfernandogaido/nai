@@ -34,6 +34,6 @@ func removeAutoIncrementHeader(filepath string) error {
 		return err
 	}
 	out := re.ReplaceAllString(string(bytes), "")
-	out = reHeader.ReplaceAllString(string(bytes), "")
+	out = reHeader.ReplaceAllString(out, "")
 	return ioutil.WriteFile(filepath, []byte(out), 0664)
 }
