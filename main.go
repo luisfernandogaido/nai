@@ -8,6 +8,9 @@ import (
 )
 
 var re = regexp.MustCompile("AUTO_INCREMENT=\\d+ ")
+var reHeader = regexp.MustCompile(
+	`/\*\s+SQLyog Community\s+MySQL - [\d.]+(-log)? : Database - dbcomprafora\s+\*+\s+\*/\s+`,
+)
 
 func main() {
 	arquivos, err := ioutil.ReadDir("./")
@@ -16,7 +19,7 @@ func main() {
 	}
 	for _, arq := range arquivos {
 		if filepath.Ext(arq.Name()) == ".sql" {
-			err = removeAutoIncrement(filepath.Join("./", arq.Name()))
+			err = removeAutoIncrementHeader(filepath.Join("./", arq.Name()))
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -24,11 +27,13 @@ func main() {
 	}
 }
 
-func removeAutoIncrement(filepath string) error {
+//remove AUTO_INCREMENT=\d+ e header do SQLyog
+func removeAutoIncrementHeader(filepath string) error {
 	bytes, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return err
 	}
 	out := re.ReplaceAllString(string(bytes), "")
+	out = reHeader.ReplaceAllString(string(bytes), "")
 	return ioutil.WriteFile(filepath, []byte(out), 0664)
 }
