@@ -9,7 +9,7 @@ import (
 
 var re = regexp.MustCompile("AUTO_INCREMENT=\\d+ ")
 var reHeader = regexp.MustCompile(
-	`/\*\s+SQLyog Community\s+MySQL - [\d.]+(-log)? : Database - dbcomprafora\s+\*+\s+\*/\s+`,
+	`/\*\s+SQLyog Community\s+MySQL - [\w\d.-]+ : Database - [\w\d_]+\s+\*+\s+\*/\s+`,
 )
 
 func main() {
