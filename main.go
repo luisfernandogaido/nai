@@ -5,6 +5,7 @@ import (
 	"log"
 	"path/filepath"
 	"regexp"
+	"strings"
 )
 
 var re = regexp.MustCompile("AUTO_INCREMENT=\\d+ ")
@@ -35,5 +36,6 @@ func removeAutoIncrementHeader(filepath string) error {
 	}
 	out := re.ReplaceAllString(string(bytes), "")
 	out = reHeader.ReplaceAllString(out, "")
+	out = strings.ToUpper(out)
 	return ioutil.WriteFile(filepath, []byte(out), 0664)
 }
