@@ -1,6 +1,6 @@
 # nai
 
-Remove `AUTO_INCREMENT` de arquivos `.sql`.
+Remove `AUTO_INCREMENT` de arquivos `.sql`. Aplica a substituição regex `"AUTO_INCREMENT=\\d+ "`
 por nada em seu lugar.
 
 ## Uso
