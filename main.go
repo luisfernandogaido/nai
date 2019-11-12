@@ -20,7 +20,8 @@ func main() {
 	}
 	for _, arq := range arquivos {
 		if filepath.Ext(arq.Name()) == ".sql" {
-			if err := removeAutoIncrementHeader(filepath.Join("./", arq.Name())); err != nil {
+			err = removeAutoIncrementHeader(filepath.Join("./", arq.Name()))
+			if err != nil {
 				log.Fatal(err)
 			}
 		}
