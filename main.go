@@ -12,6 +12,9 @@ var re = regexp.MustCompile("auto_increment=\\d+ ")
 var reHeader = regexp.MustCompile(
 	`/\*\s+SQLyog Community\s+MySQL - [\w\d.-]+ : Database - [\w\d_]+\s+\*+\s+\*/\s+`,
 )
+var reDefiner = regexp.MustCompile(
+	"definer=`root`@`[^`]+` ",
+)
 
 func main() {
 	arquivos, err := ioutil.ReadDir("./")
@@ -37,5 +40,6 @@ func removeAutoIncrementHeader(filepath string) error {
 	out := strings.ToLower(string(bytes))
 	out = re.ReplaceAllString(out, "")
 	out = reHeader.ReplaceAllString(out, "")
+	out = reDefiner.ReplaceAllString(out, "")
 	return ioutil.WriteFile(filepath, []byte(out), 0664)
 }
