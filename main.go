@@ -41,5 +41,10 @@ func removeAutoIncrementHeader(filepath string) error {
 	out = re.ReplaceAllString(out, "")
 	out = reHeader.ReplaceAllString(out, "")
 	out = reDefiner.ReplaceAllString(out, "")
+	out = strings.ReplaceAll(
+		out,
+		"no_auto_value_on_zero",
+		"strict_trans_tables,no_zero_in_date,no_zero_date,error_for_division_by_zero,no_engine_substitution",
+	)
 	return ioutil.WriteFile(filepath, []byte(out), 0664)
 }
